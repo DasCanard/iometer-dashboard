@@ -209,8 +209,8 @@ Der Exporter verwendet ausschließlich die Python-Standardbibliothek. Die enthal
 
 ### Container-Image
 
-GitHub Actions prüft das Projekt und baut das Exporter-Image automatisch für `linux/amd64` und `linux/arm64`. Ein Push auf `main` veröffentlicht `latest` sowie einen unveränderlichen `sha-…`-Tag unter `ghcr.io/dascanard/iometer-dashboard`.
+GitHub Actions baut das Exporter-Image automatisch für `linux/amd64` und `linux/arm64`. Ein Push auf `main` veröffentlicht `latest` unter `ghcr.io/dascanard/iometer-dashboard`.
 
-Ein Git-Tag nach dem Muster `v1.2.3` veröffentlicht zusätzlich die Image-Tags `1.2.3`, `1.2` und `1`. Pull Requests führen Validierung und Image-Build aus, veröffentlichen aber kein Image.
+Ein Git-Tag nach dem Muster `v1.2.3` veröffentlicht zusätzlich die Image-Tags `1.2.3`, `1.2` und `1`.
 
 Weiterführend: [Offizielle IOmeter-Anleitung zur lokalen API](https://iometer.zendesk.com/hc/de/articles/34607879921949-Node-RED).

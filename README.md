@@ -52,9 +52,7 @@ Die initialen Grafana-Zugangsdaten lauten `admin` / `admin`, sofern sie nicht in
 
 | Live-Übersicht | Energie & Lastprofil | Gerätegesundheit |
 | :---: | :---: | :---: |
-| _Screenshot folgt_ | _Screenshot folgt_ | _Screenshot folgt_ |
-
-<!-- Die Platzhalter können später durch Bilder aus docs/images/ ersetzt werden. -->
+| <img src="https://github.com/user-attachments/assets/fb32664e-3d4b-4af5-b4d2-27e339ffc873" alt="Live-Übersicht" width="420"> | <img src="https://github.com/user-attachments/assets/f565dd00-ff04-448b-847d-ef40558c55e8" alt="Energie und Lastprofil" width="420"> | <img src="https://github.com/user-attachments/assets/0cbae62e-a050-4c79-b789-ae46a1ebc215" alt="Gerätegesundheit" width="420"> |
 
 ## 📊 Dashboards
 

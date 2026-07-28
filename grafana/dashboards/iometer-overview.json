@@ -722,6 +722,7 @@
         "y": 15
       },
       "id": 10,
+      "interval": "1m",
       "options": {
         "legend": {
           "calcs": [
@@ -741,22 +742,25 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "increase(iometer_energy_import_watthours_total{instance=~\"$instance\"}[$__rate_interval]) / 1000",
+          "expr": "increase(iometer_energy_import_watthours_total{instance=~\"$instance\"}[$__interval]) / 1000",
           "instant": false,
+          "interval": "1m",
           "legendFormat": "Netzbezug",
           "range": true,
           "refId": "A"
         },
         {
           "editorMode": "code",
-          "expr": "increase(iometer_energy_export_watthours_total{instance=~\"$instance\"}[$__rate_interval]) / 1000",
+          "expr": "increase(iometer_energy_export_watthours_total{instance=~\"$instance\"}[$__interval]) / 1000",
           "instant": false,
+          "interval": "1m",
           "legendFormat": "Einspeisung",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "Energie im gewählten Zeitraum",
+      "description": "Netzbezug und Einspeisung in nicht überlappenden Zeitintervallen. Grafana passt die Intervallgröße an den gewählten Zeitraum an; das kleinste Intervall beträgt eine Minute.",
+      "title": "Energie je Zeitintervall",
       "type": "timeseries"
     },
     {
@@ -1133,6 +1137,6 @@
   "timezone": "browser",
   "title": "IOmeter · Übersicht",
   "uid": "iometer-overview",
-  "version": 1,
+  "version": 2,
   "weekStart": "monday"
 }

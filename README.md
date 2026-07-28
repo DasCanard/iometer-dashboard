@@ -1,10 +1,10 @@
-# IOmeter Dashboard
+# ⚡ IOmeter Dashboard
 
 Ein sofort startbarer Monitoring-Stack für die lokale IOmeter-API:
 
-- Ein fertiges Exporter-Image aus der GitHub Container Registry liest `/v1/reading`, `/v1/json` und optional `/v1/status`.
-- Prometheus speichert die Messwerte standardmäßig 90 Tage.
-- Grafana wird automatisch mit Datenquelle und drei fertigen Dashboards eingerichtet.
+- 📡 Ein fertiges Exporter-Image aus der GitHub Container Registry liest `/v1/reading`, `/v1/json` und optional `/v1/status`.
+- 🗄️ Prometheus speichert die Messwerte standardmäßig 90 Tage.
+- 📊 Grafana wird automatisch mit Datenquelle und drei fertigen Dashboards eingerichtet.
 
 Es sind weder manuelle Grafana-Einstellungen noch eine Cloud-Verbindung erforderlich.
 
@@ -15,7 +15,7 @@ flowchart LR
     G["Grafana<br/>3 Dashboards"] -->|PromQL| P
 ```
 
-## Schnellstart
+## 🚀 Schnellstart
 
 Benötigt werden Docker Engine beziehungsweise Docker Desktop mit Docker Compose.
 
@@ -48,7 +48,15 @@ Die Oberflächen sind anschließend hier erreichbar:
 
 Die initialen Grafana-Zugangsdaten lauten `admin` / `admin`, sofern sie nicht in `.env` geändert wurden. Vor einer Freigabe außerhalb eines vertrauenswürdigen lokalen Netzes muss `GRAFANA_ADMIN_PASSWORD` vor dem ersten Start auf ein starkes Passwort gesetzt werden.
 
-## Dashboards
+## 📸 Screenshots
+
+| Live-Übersicht | Energie & Lastprofil | Gerätegesundheit |
+| :---: | :---: | :---: |
+| _Screenshot folgt_ | _Screenshot folgt_ | _Screenshot folgt_ |
+
+<!-- Die Platzhalter können später durch Bilder aus docs/images/ ersetzt werden. -->
+
+## 📊 Dashboards
 
 ### IOmeter · Übersicht
 
@@ -84,7 +92,7 @@ Die Diagnoseansicht trennt Fehler entlang der gesamten Messkette:
 - Fehlerverlauf und HTTP-Status,
 - Funkqualität, Akku, Core-Zustand und Firmware, sofern `/v1/status` diese Daten liefert.
 
-## Konfiguration
+## ⚙️ Konfiguration
 
 Alle Laufzeitwerte werden aus `.env` gelesen:
 
@@ -133,7 +141,7 @@ Damit wird die Festplattenkapazität zur tatsächlichen Grenze. Der freie Speich
 
 Beim Verkürzen der Aufbewahrungsdauer entfernt Prometheus abgelaufene Datenblöcke im Hintergrund; das kann bis zu etwa zwei Stunden dauern. Gelöschte Messwerte lassen sich durch eine spätere Verlängerung nicht wiederherstellen.
 
-## Metrikmodell
+## 🧩 Metrikmodell
 
 Der Exporter bildet bekannte OBIS-Werte auf stabile Prometheus-Metriken ab. Zusätzlich wird jedes Register generisch als `iometer_register_value{obis="…", unit="…"}` bereitgestellt. Weitere Tarife oder Phasenwerte erscheinen dadurch ohne Exporter-Änderung in Prometheus und in der Rohregister-Tabelle.
 
@@ -155,7 +163,7 @@ In der IOmeter-App lässt sich das Messintervall beispielsweise auf Echtzeit, ei
 
 Die Dashboards zeigen den aktuellen Wert und seinen Verlauf bewusst mit neutralen Farben und ohne feste Warnschwellen. So lässt sich die beobachtete Aktualisierung mit dem individuell eingestellten Intervall vergleichen. Die Erreichbarkeit der API-Endpunkte bleibt davon unabhängig das Signal für einen tatsächlichen Verbindungs- oder API-Fehler.
 
-## Betrieb
+## 🛠️ Betrieb
 
 Status und Logs anzeigen:
 
@@ -178,7 +186,7 @@ docker compose down
 
 Grafana und Prometheus verwenden benannte Docker-Volumes. `docker compose down -v` löscht diese Historie dauerhaft und sollte nur bewusst ausgeführt werden.
 
-## Fehlerbehebung
+## 🩺 Fehlerbehebung
 
 ### `/v1/status` ist nicht verfügbar
 
@@ -198,7 +206,7 @@ Danach prüfen, ob Docker auf das lokale Netz zugreifen kann. Namen mit `.local`
 
 Prometheus benötigt mindestens zwei Zählerstände, bevor `increase(...)` eine Zeitraum-Summe berechnen kann. Live-Leistung und absolute Zählerstände erscheinen bereits nach der ersten erfolgreichen Abfrage.
 
-## Entwicklung und Prüfung
+## 💻 Entwicklung und Prüfung
 
 ```bash
 make test
@@ -207,7 +215,7 @@ make validate
 
 Der Exporter verwendet ausschließlich die Python-Standardbibliothek. Die enthaltenen Tests prüfen das IOmeter-Payload-Schema, den Fallback für den optionalen Status-Endpunkt und die Host-Konfiguration.
 
-### Container-Image
+### 🐳 Container-Image
 
 GitHub Actions baut das Exporter-Image automatisch für `linux/amd64` und `linux/arm64`. Ein Push auf `main` veröffentlicht `latest` unter `ghcr.io/dascanard/iometer-dashboard`.
 

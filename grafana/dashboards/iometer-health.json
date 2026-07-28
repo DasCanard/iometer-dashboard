@@ -1016,7 +1016,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 6,
         "x": 8,
         "y": 21
       },
@@ -1066,6 +1066,80 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Vom IOmeter gemeldeter Akkustand des Core.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 20
+              },
+              {
+                "color": "yellow",
+                "value": 40
+              },
+              {
+                "color": "green",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 14,
+        "y": 21
+      },
+      "id": 17,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.9",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "iometer_core_battery_percent{instance=~\"$instance\"}",
+          "instant": true,
+          "legendFormat": "Akkustand",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Akkustand · falls verfügbar",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1106,8 +1180,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 16,
+        "w": 6,
+        "x": 18,
         "y": 21
       },
       "id": 14,
@@ -1406,6 +1480,6 @@
   "timezone": "browser",
   "title": "IOmeter · Gerätegesundheit",
   "uid": "iometer-health",
-  "version": 1,
+  "version": 2,
   "weekStart": "monday"
 }

@@ -11,7 +11,7 @@ Es sind weder manuelle Grafana-Einstellungen noch eine Cloud-Verbindung erforder
 ```mermaid
 flowchart LR
     I["IOmeter-Bridge<br/>/v1/*"] -->|HTTP im LAN| E["IOmeter-Exporter"]
-    P["Prometheus<br/>Abfrage alle 5 Sekunden"] -->|Messwerte abrufen| E
+    P["Prometheus<br/>Abfrage alle 3 Sekunden"] -->|Messwerte abrufen| E
     G["Grafana<br/>3 Dashboards"] -->|PromQL| P
 ```
 

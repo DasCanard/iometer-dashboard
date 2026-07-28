@@ -1,0 +1,87 @@
+name: iometer-monitoring
+
+services:
+  iometer-exporter:
+    image: ghcr.io/dascanard/iometer-dashboard:latest
+    pull_policy: always
+    environment:
+      IOMETER_HOST: ${IOMETER_HOST:?IOMETER_HOST muss in .env auf die IOmeter-IP oder den Hostnamen gesetzt werden}
+      IOMETER_SCHEME: ${IOMETER_SCHEME:-http}
+      IOMETER_PORT: ${IOMETER_PORT:-80}
+      IOMETER_TIMEOUT_SECONDS: ${IOMETER_TIMEOUT_SECONDS:-3}
+      EXPORTER_PORT: 9786
+    expose:
+      - "9786"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:9786/healthz', timeout=2)"
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:v3.13.1
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-90d}
+      - --web.enable-lifecycle
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    depends_on:
+      iometer-exporter:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:12.3.9
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_USERS_DEFAULT_THEME: dark
+      GF_USERS_DEFAULT_LANGUAGE: de-DE
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/iometer-overview.json
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_PLUGINS_PREINSTALL_DISABLED: "true"
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - monitoring
+
+volumes:
+  grafana-data:
+  prometheus-data:
+
+networks:
+  monitoring:
+    driver: bridge
